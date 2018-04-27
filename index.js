@@ -300,6 +300,9 @@ class SortableListView extends React.Component {
 
   handleContentSizeChange = (width, height) => {
     this.scrollContainerHeight = height
+    if (this.scrollValue > 0) {
+      this.scrollTo({ y: height, animated: !this.props.disableAnimatedScrolling });
+    }
   }
 
   scrollAnimation = () => {
@@ -312,10 +315,7 @@ class SortableListView extends React.Component {
       const moveY = this.moveY - SCROLL_OFFSET
       const SCROLL_LOWER_BOUND = 80
       const SCROLL_HIGHER_BOUND = this.listLayout.height - SCROLL_LOWER_BOUND
-      const NORMAL_SCROLL_MAX =
-        this.scrollContainerHeight - this.listLayout.height
-      const MAX_SCROLL_VALUE =
-        NORMAL_SCROLL_MAX + this.state.active.layout.frameHeight * 2
+      const MAX_SCROLL_VALUE = this.scrollContainerHeight - this.listLayout.height
       const currentScrollValue = this.scrollValue
       let newScrollValue = null
       const SCROLL_MAX_CHANGE = 20
